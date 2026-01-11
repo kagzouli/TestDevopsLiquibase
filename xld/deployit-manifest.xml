@@ -19,7 +19,8 @@
       <stripComponents>0</stripComponents>
       <members />
       <changeLogFile>db/changelog/db.changelog-master.yaml</changeLogFile>
-      <rollbackVersion>v1.0.0</rollbackVersion>
+      <rollbackVersion>1.0.0</rollbackVersion>
+      <rollbackVersionPrefix>v</rollbackVersionPrefix>
     </liquibase.Changelog>
   </deployables>
 
