@@ -5,7 +5,7 @@
   <orchestrator />
 
     <deployables>
-    <liquibase.Changelog name="/changelog" file="/changelog/db.zip">
+    <liquibase.Changelog name="/changelog" file="/db.zip">
       <tags />
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>false</preScannedPlaceholders>
