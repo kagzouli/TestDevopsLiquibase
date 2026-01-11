@@ -4,36 +4,24 @@
   <application />
   <orchestrator />
 
-  <templates>
-    <template.overthere.LocalHost name="/LocalMachine">
-      <childTemplates>
-        <template.liquibase.Runner name="/LocalMachine/sqlscript">
-          <childTemplates />
-          <tags />
-          <allowConcurrentDeployments>true</allowConcurrentDeployments>
-          <limitNumberOfConcurrentDeployments>1</limitNumberOfConcurrentDeployments>
-          <envVars />
-          <host>/LocalMachine</host>
-          <databaseUsername>liquibase</databaseUsername>
-          <databasePassword>liquibase_pass</databasePassword>
-          <databaseJDBCURL>jdbc:mariadb://localhost:3306/testliquibase?disablePlugins=gssapi&amp;disableSslHostnameVerification=true</databaseJDBCURL>
-          <databaseJDBCDriver>driver</databaseJDBCDriver>
-          <liquibaseLauncher>org.mariadb.jdbc.Driver</liquibaseLauncher>
-          <isNoSQL>false</isNoSQL>
-          <files>
-            <file source="db/changelog/" />
-          </files>
-        </template.liquibase.Runner>
-      </childTemplates>
+    <deployables>
+    <liquibase.Changelog name="/changelog" file="/changelog/db.zip">
       <tags />
-      <allowConcurrentDeployments>true</allowConcurrentDeployments>
-      <limitNumberOfConcurrentDeployments>1</limitNumberOfConcurrentDeployments>
-      <os>Windows</os>
-      <temporaryDirectoryPath>C:\Temp\XLDLocal</temporaryDirectoryPath>
-      <puppetPath>/usr/local/bin</puppetPath>
-      <ignoreUndefinedPropertiesInManifest>true</ignoreUndefinedPropertiesInManifest>
-    </template.overthere.LocalHost>
-  </templates>
+      <scanPlaceholders>true</scanPlaceholders>
+      <preScannedPlaceholders>false</preScannedPlaceholders>
+      <placeholders />
+      <fileEncodings>
+        <entry key=".+\.properties">ISO-8859-1</entry>
+      </fileEncodings>
+      <textFileNamesRegexToTranscode>.+\.(cfg | conf | config | ini | properties | props | txt | asp | aspx | htm | html | jsf | jsp | xht | xhtml | sql | xml | xsd | xsl | xslt)</textFileNamesRegexToTranscode>
+      <isRescanned>false</isRescanned>
+      <targetPath>/tmp/karim/liquibase</targetPath>
+      <stripComponents>0</stripComponents>
+      <members />
+      <changeLogFile>db/changelog/db.changelog-master.yaml</changeLogFile>
+      <rollbackVersion>v1.0.0</rollbackVersion>
+    </liquibase.Changelog>
+  </deployables>
 
 
   <dependencyResolution>LATEST</dependencyResolution>
