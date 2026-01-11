@@ -1,12 +1,12 @@
 databaseChangeLog:
   # Version 1.0.0
   - include:
-      file: src/main/resources/db/changelog/v1.0.0/001-create-personne-table.sql
-      relativeToChangelogFile: false
+      file: v1.0.0/001-create-personne-table.sql
+      relativeToChangelogFile: true
   
   - include:
-      file: src/main/resources/db/changelog/v1.0.0/002-insert-personne-data.sql
-      relativeToChangelogFile: false
+      file: v1.0.0/002-insert-personne-data.sql
+      relativeToChangelogFile: true
 
   # Tag after v1.0.0
   - changeSet:
@@ -18,16 +18,16 @@ databaseChangeLog:
 
   # Version 1.1.0
   - include:
-      file: src/main/resources/db/changelog/v1.1.0/001-update-personne-data.sql
-      relativeToChangelogFile: false
+      file: v1.1.0/001-update-personne-data.sql
+      relativeToChangelogFile: true
 
   - include:
-      file: src/main/resources/db/changelog/v1.1.0/002-create-ville-table.sql
-      relativeToChangelogFile: false
+      file: v1.1.0/002-create-ville-table.sql
+      relativeToChangelogFile: true
 
   - include:
-      file: src/main/resources/db/changelog/v1.1.0/003-insert-ville-data.sql
-      relativeToChangelogFile: false
+      file: v1.1.0/003-insert-ville-data.sql
+      relativeToChangelogFile: true
   
   # Tag after v1.1.0
   - changeSet:

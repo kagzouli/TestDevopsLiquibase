@@ -7,3 +7,6 @@ liquibase diff - Compare databases
 ------------------------------------------
 
 In my example, if I want to rollback, I have to do liquibase rollback v1.0.0
+
+
+root/admin
