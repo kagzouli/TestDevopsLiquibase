@@ -13,7 +13,7 @@
 
         // Create the .dar to prepare it to deploy to XLDeploy
         stage('Create .dar'){
-            xldCreatePackage artifactsPath: 'src/main/resources', manifestPath: 'xld/deploy-it.xml', darPath: 'testdevopsliquibase-${BUILD_NUMBER}.dar'
+            xldCreatePackage artifactsPath: 'src/main/resources', manifestPath: 'xld/deployit-manifest.xml', darPath: 'testdevopsliquibase-${BUILD_NUMBER}.dar'
         }
 
         // Create the .dar to prepare it to deploy to XLDeploy

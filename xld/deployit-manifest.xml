@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<udm.DeploymentPackage version="1.1.0" application="TEST/EXAKA/testdevopsliquibase">
+
+  <application />
+  <orchestrator />
+
+  <templates>
+    <template.overthere.LocalHost name="/LocalMachine">
+      <childTemplates>
+        <template.liquibase.Runner name="/LocalMachine/sqlscript">
+          <childTemplates />
+          <tags />
+          <allowConcurrentDeployments>true</allowConcurrentDeployments>
+          <limitNumberOfConcurrentDeployments>1</limitNumberOfConcurrentDeployments>
+          <envVars />
+          <host />
+          <databaseUsername>liquibase</databaseUsername>
+          <databasePassword>liquibase_pass</databasePassword>
+          <databaseJDBCURL>jdbc:mariadb://localhost:3306/testliquibase?disablePlugins=gssapi&disableSslHostnameVerification=true</databaseJDBCURL>
+          <databaseJDBCDriver>driver</databaseJDBCDriver>
+          <liquibaseLauncher>org.mariadb.jdbc.Driver</liquibaseLauncher>
+          <isNoSQL>false</isNoSQL>
+          <files>
+            <file source="db/changelog/v1.0.0/" />
+            <file source="db/changelog/v1.0.0/001-create-personne-table.sql" />
+            <file source="db/changelog/v1.0.0/002-insert-personne-data.sql" />
+            <file source="db/changelog/v1.1.0/001-update-personne-data.sql" />
+            <file source="db/changelog/v1.1.0/002-create-ville-table.sql" />
+            <file source="db/changelog/v1.1.0/003-insert-ville-data.sql" />
+            <file source="db/changelog/v1.1.0/004-add-ville-id-to-personne.sql" />
+            <file source="db/changelog/v1.1.0/005-update-personne-ville.sql" />
+          </files>
+        </template.liquibase.Runner>
+      </childTemplates>
+      <tags />
+      <allowConcurrentDeployments>true</allowConcurrentDeployments>
+      <limitNumberOfConcurrentDeployments>1</limitNumberOfConcurrentDeployments>
+      <os>Windows</os>
+      <temporaryDirectoryPath>C:\Temp\XLDLocal</temporaryDirectoryPath>
+      <puppetPath>/usr/local/bin</puppetPath>
+    </template.overthere.LocalHost>
+  </templates>
+
+
+  <dependencyResolution>LATEST</dependencyResolution>
+  <undeployDependencies>false</undeployDependencies>
+
+</udm.DeploymentPackage>
