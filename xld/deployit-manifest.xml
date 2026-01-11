@@ -13,7 +13,7 @@
           <allowConcurrentDeployments>true</allowConcurrentDeployments>
           <limitNumberOfConcurrentDeployments>1</limitNumberOfConcurrentDeployments>
           <envVars />
-          <host />
+          <host>/LocalMachine</host>
           <databaseUsername>liquibase</databaseUsername>
           <databasePassword>liquibase_pass</databasePassword>
           <databaseJDBCURL>jdbc:mariadb://localhost:3306/testliquibase?disablePlugins=gssapi&amp;disableSslHostnameVerification=true</databaseJDBCURL>
@@ -22,13 +22,7 @@
           <isNoSQL>false</isNoSQL>
           <files>
             <file source="db/changelog/v1.0.0/" />
-            <file source="db/changelog/v1.0.0/001-create-personne-table.sql" />
-            <file source="db/changelog/v1.0.0/002-insert-personne-data.sql" />
-            <file source="db/changelog/v1.1.0/001-update-personne-data.sql" />
-            <file source="db/changelog/v1.1.0/002-create-ville-table.sql" />
-            <file source="db/changelog/v1.1.0/003-insert-ville-data.sql" />
-            <file source="db/changelog/v1.1.0/004-add-ville-id-to-personne.sql" />
-            <file source="db/changelog/v1.1.0/005-update-personne-ville.sql" />
+            <file source="db/changelog/v1.1.0/" />
           </files>
         </template.liquibase.Runner>
       </childTemplates>
