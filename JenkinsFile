@@ -1,0 +1,19 @@
+//serverCredentials : String
+// XL Deploy server credentials used to connect to the XL Deploy server. *
+// This must be configured under Manage Jenkins >> Configure System >> XL Deploy
+ node {
+
+        stage('Clean Workspace') {
+            deleteDir() // deletes everything in the workspace
+        }
+
+        //stage('Checkout') {
+         //   git branch: "develop", url: "https://github.com/kagzouli/StationDemoProject.git"
+       // }
+
+       stage('Liquidbase Update'){
+          steps.bat "uv build"
+       }
+
+       
+}
