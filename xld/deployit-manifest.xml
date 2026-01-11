@@ -5,36 +5,34 @@
   <orchestrator />
 
   <templates>
-    <template.overthere.LocalHost name="/LocalMachine">
-      <childTemplates>
-        <template.liquibase.Runner name="/LocalMachine/sqlscript">
-          <childTemplates />
-          <tags />
-          <allowConcurrentDeployments>true</allowConcurrentDeployments>
-          <limitNumberOfConcurrentDeployments>1</limitNumberOfConcurrentDeployments>
-          <envVars />
-          <host>/LocalMachine</host>
-          <databaseUsername>liquibase</databaseUsername>
-          <databasePassword>liquibase_pass</databasePassword>
-          <databaseJDBCURL>jdbc:mariadb://localhost:3306/testliquibase?disablePlugins=gssapi&amp;disableSslHostnameVerification=true</databaseJDBCURL>
-          <databaseJDBCDriver>driver</databaseJDBCDriver>
-          <liquibaseLauncher>org.mariadb.jdbc.Driver</liquibaseLauncher>
-          <isNoSQL>false</isNoSQL>
-          <files>
-            <file source="db/changelog/v1.0.0/" />
-            <file source="db/changelog/v1.1.0/" />
-          </files>
-        </template.liquibase.Runner>
-      </childTemplates>
+
+    <!-- Define a proper Host -->
+    <template.overthere.Host name="/Hosts/dev-db">
+      <os>Linux</os>
+      <address>127.0.0.1</address> <!-- or real DB server IP -->
+      <credentials>/Credentials/db-ssh</credentials> <!-- define your SSH credentials in XLD -->
+    </template.overthere.Host>
+
+    <!-- Liquibase Runner -->
+    <template.liquibase.Runner name="/Templates/liquibase-runner">
+      <childTemplates />
       <tags />
       <allowConcurrentDeployments>true</allowConcurrentDeployments>
       <limitNumberOfConcurrentDeployments>1</limitNumberOfConcurrentDeployments>
-      <os>Windows</os>
-      <temporaryDirectoryPath>C:\Temp\XLDLocal</temporaryDirectoryPath>
-      <puppetPath>/usr/local/bin</puppetPath>
-    </template.overthere.LocalHost>
-  </templates>
+      <envVars />
+      <host>/Hosts/dev-db</host> <!-- reference the Host -->
+      <databaseUsername>liquibase</databaseUsername>
+      <databasePassword>liquibase_pass</databasePassword>
+      <databaseJDBCURL>jdbc:mariadb://127.0.0.1:3306/testliquibase?disablePlugins=gssapi&amp;disableSslHostnameVerification=true</databaseJDBCURL>
+      <databaseJDBCDriver>org.mariadb.jdbc.Driver</databaseJDBCDriver>
+      <liquibaseLauncher>liquibase.integration.commandline.Main</liquibaseLauncher>
+      <isNoSQL>false</isNoSQL>
+      <files>
+        <file source="db/changelog/" /> <!-- include entire changelog folder recursively -->
+      </files>
+    </template.liquibase.Runner>
 
+  </templates>
 
   <dependencyResolution>LATEST</dependencyResolution>
   <undeployDependencies>false</undeployDependencies>
