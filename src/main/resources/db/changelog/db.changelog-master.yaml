@@ -1,38 +1,53 @@
 databaseChangeLog:
-  # Version 1.0.0
-  - include:
-      file: v1.0.0/001-create-personne-table.sql
-      relativeToChangelogFile: true
+    # Version 1.0.0
+    - include:
+        file: v1.0.0/001-create-personne-table.sql
+        relativeToChangelogFile: true
+        runOnChange: true
   
-  - include:
-      file: v1.0.0/002-insert-personne-data.sql
-      relativeToChangelogFile: true
+    - include:
+        file: v1.0.0/002-insert-personne-data.sql
+        relativeToChangelogFile: true
+        runOnChange: true
 
-  # Tag after v1.0.0
-  - changeSet:
-      id: tag-v1.0.0
-      author: exakaconsulting
-      changes:
-        - tagDatabase:
-            tag: v1.0.0
+    # Tag after v1.0.0
+    - changeSet:
+        id: tag-v1.0.0
+        author: exakaconsulting
+        changes:
+            - tagDatabase:
+                tag: v1.0.0
 
-  # Version 1.1.0
-  - include:
-      file: v1.1.0/001-update-personne-data.sql
-      relativeToChangelogFile: true
+    # Version 1.1.0
+    - include:
+        file: v1.1.0/001-update-personne-data.sql
+        relativeToChangelogFile: true
+        runOnChange: true
 
-  - include:
-      file: v1.1.0/002-create-ville-table.sql
-      relativeToChangelogFile: true
+    - include:
+        file: v1.1.0/002-create-ville-table.sql
+        relativeToChangelogFile: true
+        runOnChange: true
 
-  - include:
-      file: v1.1.0/003-insert-ville-data.sql
-      relativeToChangelogFile: true
+    - include:
+        file: v1.1.0/003-insert-ville-data.sql
+        relativeToChangelogFile: true
+        runOnChange: true
+
+    - include:
+        file: v1.1.0/004-add-ville-id-to-personne.sql
+        relativeToChangelogFile: true
+        runOnChange: true
+    
+    - include:
+        file: v1.1.0/005-update-personne-ville.sql
+        relativeToChangelogFile: true
+        runOnChange: true
   
-  # Tag after v1.1.0
-  - changeSet:
-      id: tag-v1.1.0
-      author: exakaconsulting
-      changes:
-        - tagDatabase:
-            tag: v1.1.0
+    # Tag after v1.1.0
+    - changeSet:
+        id: tag-v1.1.0
+        author: exakaconsulting
+        changes:
+            - tagDatabase:
+                tag: v1.1.0
