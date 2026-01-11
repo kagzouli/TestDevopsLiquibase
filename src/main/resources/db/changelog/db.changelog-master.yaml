@@ -6,3 +6,15 @@ databaseChangeLog:
   - include:
       file: src/main/resources/db/changelog/v1.0.0/002-insert-personne-data.sql
       relativeToChangelogFile: false
+
+  - include:
+      file: src/main/resources/db/changelog/v1.1.0/001-update-personne-data.sql
+      relativeToChangelogFile: false
+
+  - include:
+    file: src/main/resources/db/changelog/v1.1.0/002-create-ville-table.sql
+    relativeToChangelogFile: false
+
+  - include:
+    file: src/main/resources/db/changelog/v1.1.0/003-insert-ville-data.sql
+    relativeToChangelogFile: false
