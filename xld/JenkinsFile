@@ -1,5 +1,9 @@
 node {
 
+    environment {
+        ROLLBACK_VERSION = "1.0.0"
+    }
+
     stage('Clean Workspace') {
         deleteDir() // deletes everything in the workspace
     }

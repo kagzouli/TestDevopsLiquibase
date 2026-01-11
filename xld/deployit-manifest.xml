@@ -9,10 +9,7 @@
       <tags />
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
-      <delimiters>{{ }}</delimiters>
-      <placeholders>
-        <value>ROLLBACK_VERSION</value>
-      </placeholders>
+      <placeholders />
       <fileEncodings>
         <entry key=".+\.properties">ISO-8859-1</entry>
       </fileEncodings>
