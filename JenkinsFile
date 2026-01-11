@@ -7,13 +7,16 @@
             deleteDir() // deletes everything in the workspace
         }
 
-        //stage('Checkout') {
-         //   git branch: "develop", url: "https://github.com/kagzouli/StationDemoProject.git"
-       // }
+        // Checkout
+        stage('Checkout') {
+            git branch: "main", url: "https://github.com/kagzouli/TestDevopsLiquibase.git"
+        }
 
-       stage('Liquidbase Update'){
-          steps.bat "uv build"
-       }
+     
+        // Update liquibase
+        stage('Liquibase Update'){
+            steps.bat "liquibase update"
+        }
 
        
 }
