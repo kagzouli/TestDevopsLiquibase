@@ -8,8 +8,11 @@
     <liquibase.Changelog name="/changelog" file="/db.zip">
       <tags />
       <scanPlaceholders>true</scanPlaceholders>
-      <preScannedPlaceholders>false</preScannedPlaceholders>
+      <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
+      <placeholders>
+        <value>ROLLBACK_VERSION</value>
+      </placeholders>
       <fileEncodings>
         <entry key=".+\.properties">ISO-8859-1</entry>
       </fileEncodings>
