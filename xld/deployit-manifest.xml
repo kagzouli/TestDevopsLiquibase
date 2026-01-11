@@ -16,7 +16,7 @@
           <host />
           <databaseUsername>liquibase</databaseUsername>
           <databasePassword>liquibase_pass</databasePassword>
-          <databaseJDBCURL>jdbc:mariadb://localhost:3306/testliquibase?disablePlugins=gssapi&disableSslHostnameVerification=true</databaseJDBCURL>
+          <databaseJDBCURL>jdbc:mariadb://localhost:3306/testliquibase?disablePlugins=gssapi&amp;disableSslHostnameVerification=true</databaseJDBCURL>
           <databaseJDBCDriver>driver</databaseJDBCDriver>
           <liquibaseLauncher>org.mariadb.jdbc.Driver</liquibaseLauncher>
           <isNoSQL>false</isNoSQL>
