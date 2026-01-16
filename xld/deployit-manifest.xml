@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<udm.DeploymentPackage version="3" application="TEST/EXAKA/testdevopsliquibase">
+<udm.DeploymentPackage version="1" application="TEST/EXAKA/testdevopsliquibase">
 
   <application />
   <orchestrator />
 
     <deployables>
-    <liquibase.Changelog name="/changelog-3" file="/db.zip">
+    <liquibase.Changelog name="/changelog-1" file="/db.zip">
       <tags />
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
@@ -19,7 +19,8 @@
       <stripComponents>0</stripComponents>
       <members />
       <changeLogFile>db/changelog/db.changelog-master.yaml</changeLogFile>
-      <rollbackVersion>2</rollbackVersion>
+      <rollbackVersion>0</rollbackVersion>
+      <rollbackVersionPrefix>v</rollbackVersionPrefix>
     </liquibase.Changelog>
   </deployables>
 

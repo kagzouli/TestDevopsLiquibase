@@ -31,4 +31,4 @@ databaseChangeLog:
       author: exakaconsulting
       changes:
           - tagDatabase:
-              tag: v1.1.0
+              tag: v2
