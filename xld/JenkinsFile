@@ -1,15 +1,11 @@
 node {
 
-    environment {
-        ROLLBACK_VERSION = "1.0.0"
-    }
-
     stage('Clean Workspace') {
         deleteDir() // deletes everything in the workspace
     }
 
     stage('Checkout') {
-        git branch: "main", url: "https://github.com/kagzouli/TestDevopsLiquibase.git"
+        git branch: "feature/testrollback", url: "https://github.com/kagzouli/TestDevopsLiquibase.git"
     }
 
     // Create the zip file db.zip
@@ -39,6 +35,6 @@ node {
 
     // Deploy to the right environment (dev)
     stage('Deploy to env'){
-        xldDeploy serverCredentials: 'xldeploy-cred', environmentId: 'Environments/TEST/EXAKA/testdevopsliquibase', packageId: 'Applications/TEST/EXAKA/testdevopsliquibase/1.1.0'
+        xldDeploy serverCredentials: 'xldeploy-cred', environmentId: 'Environments/TEST/EXAKA/testdevopsliquibase', packageId: 'Applications/TEST/EXAKA/testdevopsliquibase/1'
     }
 }
