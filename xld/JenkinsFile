@@ -35,6 +35,6 @@ node {
 
     // Deploy to the right environment (dev)
     stage('Deploy to env'){
-        xldDeploy serverCredentials: 'xldeploy-cred', environmentId: 'Environments/TEST/EXAKA/testdevopsliquibase', packageId: 'Applications/TEST/EXAKA/testdevopsliquibase/1'
+        xldDeploy serverCredentials: 'xldeploy-cred', environmentId: 'Environments/TEST/EXAKA/testdevopsliquibase', packageId: 'Applications/TEST/EXAKA/testdevopsliquibase/2'
     }
 }
