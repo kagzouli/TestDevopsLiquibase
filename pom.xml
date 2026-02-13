@@ -36,8 +36,9 @@
 
 			<executions>
 
+
 				<!-- ┌──────────────────────────────────────────┐ -->
-				<!-- │  EXÉCUTION 1 — Execution du    │ -->
+				<!-- │  EXÉCUTION 1 — Execution du clearCheckSum│ -->
 				<!-- └──────────────────────────────────────────┘ -->
 				<execution>
 					<id>clear-checksums</id>
@@ -50,8 +51,25 @@
 					</configuration>
 				</execution>
 
+
+				<!-- ┌──────────────────────────────────────────────── -->
+				<!-- │  EXÉCUTION 3 — Note tous avant version avant tagge  │ -->
+				<!-- └──────────────────────────────────────────────── -->
+				<execution>
+					<id>sync-before-tag</id>
+					<phase>prepare-package</phase>
+					<goals>
+						<goal>changelogSyncToTagSQL</goal>
+					</goals>
+					<configuration>
+						<toTag>v1.1.0</toTag>
+						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
+					</configuration>
+				</execution>			
+                 
+
 				<!-- ┌──────────────────────────────────────────┐ -->
-				<!-- │  EXÉCUTION 2 — Génération du updateSQL   │ -->
+				<!-- │  EXÉCUTION 3 — Génération du updateSQL   │ -->
 				<!-- └──────────────────────────────────────────┘ -->
 				<execution>
 					<id>generate-update-sql</id>
@@ -61,13 +79,13 @@
 					</goals>
 					<configuration>
 						
-						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
+						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
 						<migrationSqlOutputFile>${project.build.directory}/liquibase/testdevopsliquibase-${db.version}.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
 
 				<!-- ┌──────────────────────────────────────────────┐ -->
-				<!-- │  EXÉCUTION 3 — Génération du rollbackSQL     │ -->
+				<!-- │  EXÉCUTION 4 — Génération du rollbackSQL     │ -->
 				<!-- └──────────────────────────────────────────────┘ -->
 				<execution>
 					<id>generate-rollback-sql</id>
@@ -76,9 +94,9 @@
 						<goal>rollbackSQL</goal>
 					</goals>
 					<configuration>
-						<rollbackTag>${db.version}</rollbackTag>
+						<rollbackTag>v1.1.0</rollbackTag>
 						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
-												<migrationSqlOutputFile>${project.build.directory}/liquibase/testdevopsliquibase-${db.version}-rollback.sql</migrationSqlOutputFile>
+						<migrationSqlOutputFile>${project.build.directory}/liquibase/testdevopsliquibase-${db.version}-rollback.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
 
