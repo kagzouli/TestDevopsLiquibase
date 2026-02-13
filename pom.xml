@@ -46,7 +46,7 @@
 						<goal>clearCheckSums</goal>
 					</goals>
 					<configuration>
-						<url>offline:mariadb?version=10.6</url>
+						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
 					</configuration>
 				</execution>
 
@@ -60,8 +60,9 @@
 						<goal>updateSQL</goal>
 					</goals>
 					<configuration>
-						<outputFile>${project.build.directory}/liquibase/testdevopsliquibase-${db.version}.sql</outputFile>
-						<url>offline:mariadb?version=10.6&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv&amp;outputLiquibaseSql=true</url>
+						
+						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
+						<migrationSqlOutputFile>${project.build.directory}/liquibase/testdevopsliquibase-${db.version}.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
 
@@ -76,8 +77,8 @@
 					</goals>
 					<configuration>
 						<rollbackTag>${db.version}</rollbackTag>
-						<outputFile>${project.build.directory}/liquibase/testdevopsliquibase-${db.version}-rollback.sql</outputFile>
-						<url>offline:mariadb?version=10.6&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv&amp;outputLiquibaseSql=false</url>
+						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
+												<migrationSqlOutputFile>${project.build.directory}/liquibase/testdevopsliquibase-${db.version}-rollback.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
 
