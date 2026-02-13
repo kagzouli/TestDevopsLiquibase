@@ -10,9 +10,9 @@ databaseChangeLog:
         relativeToChangelogFile: true
         runOnChange: true
 
-    # Tag after v1.0.0
+    # Tag after v1.1.0
     - changeSet:
-        id: tag-v1.0.0
+        id: tag-v1.1.0
         author: exakaconsulting
         changes:
             - tagDatabase:
