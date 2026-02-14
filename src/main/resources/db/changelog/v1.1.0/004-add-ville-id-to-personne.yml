@@ -2,6 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: 004-add-ville-id-column
       author: exakaconsulting
+      labels: v1.1.0
+      context: all
       changes:
         - tagDatabase:
             tag: v1.1.0
@@ -19,6 +21,8 @@ databaseChangeLog:
   - changeSet:
       id: 004-add-fk-personne-ville
       author: exakaconsulting
+      labels: v1.1.0
+      context: all
       changes:
         - tagDatabase:
             tag: v1.1.0

@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 003-insert-ville-data
-      author: yourname
+      author: exakaconsulting
       labels: v1.1.0
       context: all
       comment: Insert initial data into VILLE table

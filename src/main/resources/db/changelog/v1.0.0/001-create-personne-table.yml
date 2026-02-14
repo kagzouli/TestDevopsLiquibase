@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 001-create-personne-table
-      author: yourname
+      author: exakaconsulting
       labels: v1.0.0
       context: all
       comment: Create PERSONNE table to store person information

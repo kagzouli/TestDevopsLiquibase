@@ -2,6 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: 005-update-personne-ville
       author: exakaconsulting
+      labels: v1.1.0
+      context: all
       changes:
         - tagDatabase:
             tag: v1.1.0

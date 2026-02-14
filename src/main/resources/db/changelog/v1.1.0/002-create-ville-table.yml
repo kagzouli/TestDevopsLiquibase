@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 002-create-ville-table
-      author: yourname
+      author: exakaconsulting
       labels: v1.1.0
       context: all
       comment: Create TABLE VILLE to store VILLE information

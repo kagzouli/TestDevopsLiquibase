@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 001-update-personne-data
-      author: yourname
+      author: exakaconsulting
       labels: v1.1.0
       context: all
       comment: Update PERSONNE table
