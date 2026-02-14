@@ -1,22 +1,42 @@
-//serverCredentials : String
-// XL Deploy server credentials used to connect to the XL Deploy server. *
-// This must be configured under Manage Jenkins >> Configure System >> XL Deploy
- node {
+properties([
+    parameters([
+        choice(
+            name: 'DB_VERSION',
+            choices: ['v1.0.0', 'v1.1.0'],
+            description: 'Choose the version to deploy'
+        )
+    ])
+])
 
-        stage('Clean Workspace') {
-            deleteDir() // deletes everything in the workspace
-        }
+node {
 
-        // Checkout
-        stage('Checkout') {
-            git branch: "main", url: "https://github.com/kagzouli/TestDevopsLiquibase.git"
-        }
+    stage('Clean Workspace') {
+        deleteDir()
+    }
 
-     
-        // Update liquibase
-        stage('Liquibase Update'){
-            steps.bat "liquibase update"
-        }
+    stage('Checkout') {
+        git branch: "main", url: "https://github.com/kagzouli/TestDevopsLiquibase.git"
+    }
 
-       
+    // Maven clean package + Generate dar
+    stage('Create .dar') {
+        bat "mvn clean package -Ddb.version=${params.DB_VERSION}"
+    }
+
+    // Publish the .dar to XL Deploy
+    stage('Publish application') {
+        xldPublishPackage(
+            serverCredentials: 'xldeploy-cred',
+            darPath: "${WORKSPACE}/target/testdevopsliquibase-${params.DB_VERSION}.dar"
+        )
+    }
+
+    // Deploy to the right environment
+    stage('Deploy to env') {
+        xldDeploy(
+            serverCredentials: 'xldeploy-cred',
+            environmentId: 'Environments/TEST/EXAKA/testdevopsliquibase',
+            packageId: "Applications/TEST/EXAKA/testdevopsliquibase/${params.DB_VERSION}"
+        )
+    }
 }
