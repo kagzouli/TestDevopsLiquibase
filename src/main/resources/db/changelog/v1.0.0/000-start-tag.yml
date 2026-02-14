@@ -1,0 +1,8 @@
+databaseChangeLog:  
+  # Tag after v1.1.0
+  - changeSet:
+      id: start-tag-v1.0.0
+      author: exakaconsulting
+      changes:
+        - tagDatabase:
+            tag: v1.0.0
