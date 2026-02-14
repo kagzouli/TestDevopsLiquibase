@@ -172,6 +172,7 @@
 						<encoding>UTF-8</encoding>
 						<createOrder>50</createOrder>
                 		<destroyOrder>50</destroyOrder>
+						<defaultCopyStrategy>COPY_MODIFIED</defaultCopyStrategy>
 					</sql.SqlScripts>
 				</deployables>
 			</configuration>
