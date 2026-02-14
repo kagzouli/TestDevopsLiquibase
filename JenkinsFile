@@ -25,9 +25,15 @@ node {
 
     // Publish the .dar to XL Deploy
     stage('Publish application') {
+
+        // Read the Maven project version from pom.xml after build
+        bat "mvn help:evaluate -Dexpression=project.version -q -DforceStdout > version.txt"
+        projectVersion = readFile('version.txt').trim()
+
+        // Publish the package
         xldPublishPackage(
             serverCredentials: 'xldeploy-cred',
-            darPath: "${WORKSPACE}/target/testdevopsliquibase-${params.DB_VERSION}.dar"
+            darPath: "${WORKSPACE}/target/testdevopsliquibase-${projectVersion}.dar"
         )
     }
 
