@@ -33,7 +33,7 @@ node {
         // Publish the package
         xldPublishPackage(
             serverCredentials: 'xldeploy-cred',
-            darPath: "${WORKSPACE}/target/testdevopsliquibase-${projectVersion}.dar"
+            darPath: "target/testdevopsliquibase-${projectVersion}.dar"
         )
     }
 
