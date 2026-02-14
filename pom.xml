@@ -166,13 +166,13 @@
 				<application>TEST/EXAKA/testdevopsliquibase</application>
 				<version>${db.version}</version>
 				<deployables>
-					<sql.Scripts name="sql-scripts">
+					<sql.sqlScripts name="sql-scripts">
 						<location>${project.build.directory}/testdevopsliquibase-${db.version}.zip</location>
 						<scanPlaceholders>false</scanPlaceholders>
 						<encoding>UTF-8</encoding>
 						<createOrder>50</createOrder>
                 		<destroyOrder>50</destroyOrder>
-					</sql.Scripts>
+					</sql.sqlScripts>
 				</deployables>
 			</configuration>
 		</plugin>
