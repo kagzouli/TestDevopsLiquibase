@@ -5,9 +5,16 @@
 <version>0.0.1-SNAPSHOT</version>
 <properties>
 	<db.version>v1.1.0</db.version>
+	<mariadb.client.version>3.5.7</mariadb.client.version>
 </properties>
   
 <dependencies>
+	<!-- Plugin for mariadb-->
+	<dependency>
+    	<groupId>org.mariadb.jdbc</groupId>
+    	<artifactId>mariadb-java-client</artifactId>
+		<version>${mariadb.client.version}</version>
+	</dependency>
   </dependencies>
 
 <build>
@@ -53,7 +60,7 @@
 
 
 				<!-- ┌──────────────────────────────────────────────── -->
-				<!-- │  EXÉCUTION 3 — Note tous avant version avant tagge  │ -->
+				<!-- │  EXÉCUTION 2 — Note tous avant version avant tagge  │ -->
 				<!-- └──────────────────────────────────────────────── -->
 				<execution>
 					<id>sync-before-tag</id>
