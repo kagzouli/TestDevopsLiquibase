@@ -164,7 +164,7 @@
 			</executions>
 			<configuration>
 				<application>TEST/EXAKA/testdevopsliquibase</application>
-				<version>${db.version}</version>
+				<packageVersion>${db.version}</packageVersion>
 				<deployables>
 					<sql.SqlScripts name="sql-scripts">
 						<location>${project.build.directory}/testdevopsliquibase-${db.version}.zip</location>
