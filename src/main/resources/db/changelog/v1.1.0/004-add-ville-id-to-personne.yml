@@ -3,6 +3,8 @@ databaseChangeLog:
       id: 004-add-ville-id-column
       author: exakaconsulting
       changes:
+        - tagDatabase:
+            tag: v1.1.0
         - addColumn:
             tableName: PERSONNE
             columns:
@@ -18,6 +20,8 @@ databaseChangeLog:
       id: 004-add-fk-personne-ville
       author: exakaconsulting
       changes:
+        - tagDatabase:
+            tag: v1.1.0
         - addForeignKeyConstraint:
             baseTableName: PERSONNE
             baseColumnNames: ville_id

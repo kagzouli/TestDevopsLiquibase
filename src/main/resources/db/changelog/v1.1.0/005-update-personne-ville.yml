@@ -3,6 +3,8 @@ databaseChangeLog:
       id: 005-update-personne-ville
       author: exakaconsulting
       changes:
+        - tagDatabase:
+            tag: v1.1.0
         - sql:
             sql: |
               UPDATE personne p
