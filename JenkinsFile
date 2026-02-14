@@ -14,8 +14,19 @@ node {
         deleteDir()
     }
 
+    // Checkout Git
     stage('Checkout') {
-        git branch: "refs/tags/${params.DB_VERSION}", url: "https://github.com/kagzouli/TestDevopsLiquibase.git"
+        checkout([
+            $class: 'GitSCM',
+            branches: [[name: "tags/${params.DB_VERSION}"]],
+            userRemoteConfigs: [[
+                url: 'https://github.com/kagzouli/TestDevopsLiquibase.git'
+            ]],
+            extensions: [[
+                $class: 'CloneOption',
+                noTags: false
+            ]]
+        ])
     }
 
     // Maven clean package + Generate dar
