@@ -170,7 +170,7 @@
 						<location>${project.build.directory}/testdevopsliquibase-${db.version}.zip</location>
 						<scanPlaceholders>false</scanPlaceholders>
 						<encoding>UTF-8</encoding>
-						<executeOrder>50</createOrder>
+						<executeOrder>50</executeOrder>
 						<defaultCopyStrategy>COPY_MODIFIED</defaultCopyStrategy>
 					</sql.SqlScripts>
 				</deployables>
