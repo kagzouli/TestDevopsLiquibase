@@ -16,6 +16,6 @@ This is the command use by liquibase to manage his changeset :
 
  | Command  |  Description |
 | ------------ | ------------ |
-| liquibase update | the command update all the changesets of the project to release a new version v1.1.0  |
-| liquibase rollback v1.0.0 | the command is used to rollback to the previous version v1.0.0 if we already deployed the v1.1.0  |
-| liquibase rollbackCount 15 | the command is used to remove the 15 changeset.  |
+| mvn liquibase:update | the command update all the changesets of the project to release a new version v1.1.0  |
+| mvn liquibase:rollback  -Dliquibase.rollbackTag=v1.1.0 | the command is used to rollback to the previous version v1.0.0 if we already deployed the v1.1.0  |
+| mvn liquibase:rollback  -Dliquibase.rollbackCount=15 | the command is used to remove the 15 changeset.  |
