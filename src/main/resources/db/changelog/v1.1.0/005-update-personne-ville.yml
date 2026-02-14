@@ -9,25 +9,25 @@ databaseChangeLog:
             tag: v1.1.0
         - sql:
             sql: |
-              UPDATE personne p
+              UPDATE PERSONNE p
               JOIN ville v ON v.nom = 'Paris'
               SET p.ville_id = v.id
               WHERE p.nom = 'Nom1';
 
-              UPDATE personne p
+              UPDATE PERSONNE p
               JOIN ville v ON v.nom = 'Toulouse'
               SET p.ville_id = v.id
               WHERE p.nom = 'Nom2';
 
-              UPDATE personne p
+              UPDATE PERSONNE p
               JOIN ville v ON v.nom = 'Paris'
               SET p.ville_id = v.id
               WHERE p.nom = 'Nom3';
 
-              UPDATE personne p
+              UPDATE PERSONNE p
               JOIN ville v ON v.nom = 'Lyon'
               SET p.ville_id = v.id
               WHERE p.nom = 'Nom4';
       rollback:
         - sql:
-            sql: UPDATE personne SET ville_id = NULL;
+            sql: UPDATE PERSONNE SET ville_id = NULL;
