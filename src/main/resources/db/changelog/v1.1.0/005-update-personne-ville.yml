@@ -10,22 +10,22 @@ databaseChangeLog:
         - sql:
             sql: |
               UPDATE PERSONNE p
-              JOIN ville v ON v.nom = 'Paris'
+              JOIN VILLE v ON v.nom = 'Paris'
               SET p.ville_id = v.id
               WHERE p.nom = 'Nom1';
 
               UPDATE PERSONNE p
-              JOIN ville v ON v.nom = 'Toulouse'
+              JOIN VILLE v ON v.nom = 'Toulouse'
               SET p.ville_id = v.id
               WHERE p.nom = 'Nom2';
 
               UPDATE PERSONNE p
-              JOIN ville v ON v.nom = 'Paris'
+              JOIN VILLE v ON v.nom = 'Paris'
               SET p.ville_id = v.id
               WHERE p.nom = 'Nom3';
 
               UPDATE PERSONNE p
-              JOIN ville v ON v.nom = 'Lyon'
+              JOIN VILLE v ON v.nom = 'Lyon'
               SET p.ville_id = v.id
               WHERE p.nom = 'Nom4';
       rollback:
