@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-update-personne-data
+      author: yourname
+      labels: v1.1.0
+      context: all
+      comment: Update PERSONNE table
+      changes:
+        - tagDatabase:
+            tag: v1.1.0
+        - update:
+            tableName: PERSONNE
+            columns:
+              - column:
+                  name: prenom
+                  value: NewPrenom4
+            where: nom = 'Nom4'
+      rollback:
+        - update:
+            tableName: PERSONNE
+            columns:
+              - column:
+                  name: prenom
+                  value: Prenom4
+            where: nom = 'Nom4'

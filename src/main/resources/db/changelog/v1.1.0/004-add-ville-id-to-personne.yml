@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-add-ville-id-column
+      author: exakaconsulting
+      changes:
+        - addColumn:
+            tableName: PERSONNE
+            columns:
+              - column:
+                  name: ville_id
+                  type: INTEGER
+      rollback:
+        - dropColumn:
+            tableName: PERSONNE
+            columnName: ville_id
+
+  - changeSet:
+      id: 004-add-fk-personne-ville
+      author: exakaconsulting
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: PERSONNE
+            baseColumnNames: ville_id
+            constraintName: fk_personne_ville
+            referencedTableName: VILLE
+            referencedColumnNames: id
+      rollback:
+        - dropForeignKeyConstraint:
+            baseTableName: PERSONNE
+            constraintName: fk_personne_ville

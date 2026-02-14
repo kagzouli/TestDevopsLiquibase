@@ -1,19 +1,11 @@
 databaseChangeLog:
     # Version 1.0.0
     - include:
-        file: v1.0.0/001-create-personne-table.sql
+        file: v1.0.0/001-create-personne-table.yml
         relativeToChangelogFile: true
         runOnChange: true
   
     - include:
-        file: v1.0.0/002-insert-personne-data.sql
+        file: v1.0.0/002-insert-personne-data.yml
         relativeToChangelogFile: true
         runOnChange: true
-
-    # Tag after v1.1.0
-    - changeSet:
-        id: tag-v1.1.0
-        author: exakaconsulting
-        changes:
-            - tagDatabase:
-                tag: v1.1.0

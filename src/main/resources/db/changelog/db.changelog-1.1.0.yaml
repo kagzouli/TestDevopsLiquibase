@@ -1,34 +1,26 @@
 databaseChangeLog:  
   # Version 1.1.0
   - include:
-      file: v1.1.0/001-update-personne-data.sql
+      file: v1.1.0/001-update-personne-data.yml
       relativeToChangelogFile: true
       runOnChange: true
 
   - include:
-      file: v1.1.0/002-create-ville-table.sql
+      file: v1.1.0/002-create-ville-table.yml
       relativeToChangelogFile: true
       runOnChange: true
 
   - include:
-      file: v1.1.0/003-insert-ville-data.sql
+      file: v1.1.0/003-insert-ville-data.yml
       relativeToChangelogFile: true
       runOnChange: true
 
   - include:
-      file: v1.1.0/004-add-ville-id-to-personne.sql
+      file: v1.1.0/004-add-ville-id-to-personne.yml
       relativeToChangelogFile: true
       runOnChange: true
     
   - include:
-      file: v1.1.0/005-update-personne-ville.sql
+      file: v1.1.0/005-update-personne-ville.yml
       relativeToChangelogFile: true
       runOnChange: true
-  
-  # Tag after v1.2.0
-  - changeSet:
-      id: tag-v1.2.0
-      author: exakaconsulting
-      changes:
-          - tagDatabase:
-              tag: v1.2.0

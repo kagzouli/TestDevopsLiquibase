@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-insert-personne-data
+      author: yourname
+      labels: v1.0.0
+      context: all
+      comment: Insert initial data into PERSONNE table
+      changes:
+        - tagDatabase:
+            tag: v1.0.0
+        - insert:
+            tableName: PERSONNE
+            columns:
+              - column:
+                  name: nom
+                  value: Nom1
+              - column:
+                  name: prenom
+                  value: Prenom1
+        - insert:
+            tableName: PERSONNE
+            columns:
+              - column:
+                  name: nom
+                  value: Nom2
+              - column:
+                  name: prenom
+                  value: Prenom2
+        - insert:
+            tableName: PERSONNE
+            columns:
+              - column:
+                  name: nom
+                  value: Nom3
+              - column:
+                  name: prenom
+                  value: Prenom3
+        - insert:
+            tableName: PERSONNE
+            columns:
+              - column:
+                  name: nom
+                  value: Nom4
+              - column:
+                  name: prenom
+                  value: Prenom4
+      rollback:
+        - delete:
+            tableName: PERSONNE
+            where: nom IN ('Nom1', 'Nom2', 'Nom3', 'Nom4')
