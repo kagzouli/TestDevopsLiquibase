@@ -15,7 +15,7 @@ node {
     }
 
     stage('Checkout') {
-        git branch: "main", url: "https://github.com/kagzouli/TestDevopsLiquibase.git"
+        git branch: "refs/tags/${params.DB_VERSION}", url: "https://github.com/kagzouli/TestDevopsLiquibase.git"
     }
 
     // Maven clean package + Generate dar
