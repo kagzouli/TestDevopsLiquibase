@@ -101,7 +101,7 @@
 					<configuration>
 						
 						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
-						<migrationSqlOutputFile>${project.build.directory}/liquibase/001-testdevopsliquibase.sql</migrationSqlOutputFile>
+						<migrationSqlOutputFile>${project.build.directory}/liquibase/001-scriptsql-${db.version}.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
 
@@ -117,7 +117,7 @@
 					<configuration>
 						<rollbackTag>${db.version}</rollbackTag>
 						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
-						<migrationSqlOutputFile>${project.build.directory}/liquibase/001-testdevopsliquibase-rollback.sql</migrationSqlOutputFile>
+						<migrationSqlOutputFile>${project.build.directory}/liquibase/001-scriptsql-${db.version}-rollback.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
 			</executions> 
@@ -138,8 +138,8 @@
 					<configuration>
 						<target>
 							<zip destfile="${project.build.directory}/testdevopsliquibase-${db.version}.zip">
-								<fileset file="${project.build.directory}/liquibase/001-testdevopsliquibase.sql"/>
-								<fileset file="${project.build.directory}/liquibase/001-testdevopsliquibase-rollback.sql"/>
+								<fileset file="${project.build.directory}/liquibase/001-scriptsql-${db.version}.sql"/>
+								<fileset file="${project.build.directory}/liquibase/001-scriptsql-${db.version}-rollback.sql"/>
 							</zip>
 						</target>
 					</configuration>
@@ -172,6 +172,9 @@
 						<encoding>UTF-8</encoding>
 						<executeOrder>50</executeOrder>
 						<defaultCopyStrategy>COPY_MODIFIED</defaultCopyStrategy>
+						<executeOnUpgrade>true</executeOnUpgrade>
+    					<executeOnRollback>true</executeOnRollback>
+    					<runOnlyOnFirstDeployment>false</runOnlyOnFirstDeployment>
 					</sql.SqlScripts>
 				</deployables>
 			</configuration>
