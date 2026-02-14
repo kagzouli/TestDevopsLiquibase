@@ -1,40 +1,42 @@
+properties([
+    parameters([
+        choice(
+            name: 'DB_VERSION',
+            choices: ['v1.0.0', 'v1.1.0'],
+            description: 'Choose the version to deploy'
+        )
+    ])
+])
+
 node {
 
     stage('Clean Workspace') {
-        deleteDir() // deletes everything in the workspace
+        deleteDir()
     }
 
     stage('Checkout') {
-        git branch: "feature/testrollback", url: "https://github.com/kagzouli/TestDevopsLiquibase.git"
+        git branch: "main", url: "https://github.com/kagzouli/TestDevopsLiquibase.git"
     }
 
-    // Create the zip file db.zip
-    stage('Create zip file') {
-        dir('src/main/resources') {   // Change working directory
-            // Use full path to 7z if needed, or just '7z' if in PATH
-            bat '"7z.exe" a -tzip db.zip db'
-        }
-    }
-
-    // Create the .dar to prepare it to deploy to XLDeploy
+    // Maven clean package + Generate dar
     stage('Create .dar') {
-        xldCreatePackage(
-            artifactsPath: 'src/main/resources', 
-            manifestPath: 'xld/deployit-manifest.xml', 
-            darPath: "testdevopsliquibase-${BUILD_NUMBER}.dar"
-        )
+        bat "mvn clean package -Ddb.version=${params.DB_VERSION}"
     }
 
     // Publish the .dar to XL Deploy
     stage('Publish application') {
         xldPublishPackage(
-            serverCredentials: 'xldeploy-cred', 
-            darPath: "testdevopsliquibase-${BUILD_NUMBER}.dar"
+            serverCredentials: 'xldeploy-cred',
+            darPath: "${WORKSPACE}/target/testdevopsliquibase-${params.DB_VERSION}.dar"
         )
     }
 
-    // Deploy to the right environment (dev)
-    stage('Deploy to env'){
-        xldDeploy serverCredentials: 'xldeploy-cred', environmentId: 'Environments/TEST/EXAKA/testdevopsliquibase', packageId: 'Applications/TEST/EXAKA/testdevopsliquibase/2'
+    // Deploy to the right environment
+    stage('Deploy to env') {
+        xldDeploy(
+            serverCredentials: 'xldeploy-cred',
+            environmentId: 'Environments/TEST/EXAKA/testdevopsliquibase',
+            packageId: "Applications/TEST/EXAKA/testdevopsliquibase/${params.DB_VERSION}"
+        )
     }
 }
