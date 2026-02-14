@@ -15,7 +15,21 @@
     	<artifactId>mariadb-java-client</artifactId>
 		<version>${mariadb.client.version}</version>
 	</dependency>
-  </dependencies>
+</dependencies>
+
+<pluginRepositories>
+    <pluginRepository>
+        <id>digitalai-releases</id>
+        <name>Digital.ai Release Repository</name>
+        <url>https://dist.xebialabs.com/public/maven2</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </pluginRepository>
+</pluginRepositories>
 
 <build>
 	<plugins>
@@ -87,7 +101,7 @@
 					<configuration>
 						
 						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
-						<migrationSqlOutputFile>${project.build.directory}/liquibase/testdevopsliquibase-${db.version}.sql</migrationSqlOutputFile>
+						<migrationSqlOutputFile>${project.build.directory}/liquibase/testdevopsliquibase.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
 
@@ -103,12 +117,13 @@
 					<configuration>
 						<rollbackTag>${db.version}</rollbackTag>
 						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
-						<migrationSqlOutputFile>${project.build.directory}/liquibase/testdevopsliquibase-${db.version}-rollback.sql</migrationSqlOutputFile>
+						<migrationSqlOutputFile>${project.build.directory}/liquibase/testdevopsliquibase-rollback.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
 			</executions> 
      	</plugin>
 
+		<!-- Zip of SQL content --> 
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-antrun-plugin</artifactId>
@@ -123,13 +138,42 @@
 					<configuration>
 						<target>
 							<zip destfile="${project.build.directory}/testdevopsliquibase-${db.version}.zip">
-								<fileset file="${project.build.directory}/liquibase/testdevopsliquibase-${db.version}.sql"/>
-								<fileset file="${project.build.directory}/liquibase/testdevopsliquibase-${db.version}-rollback.sql"/>
+								<fileset file="${project.build.directory}/liquibase/testdevopsliquibase.sql"/>
+								<fileset file="${project.build.directory}/liquibase/testdevopsliquibase-rollback.sql"/>
 							</zip>
 						</target>
 					</configuration>
 				</execution>
 			</executions>
+		</plugin>
+
+
+		<!-- Create of the DAR -->
+		<plugin>
+			<groupId>com.xebialabs.xldeploy</groupId>
+			<artifactId>xldeploy-maven-plugin</artifactId>
+			<version>23.1.4</version>
+			<executions>
+				<execution>
+					<id>create-dar</id>
+					<phase>package</phase>
+					<goals>
+						<goal>generate-deployment-package</goal>
+					</goals>
+				</execution>
+			</executions>
+			<configuration>
+				<application>TEST/EXAKA/testdevopsliquibase</application>
+				<deployables>
+					<sql.Scripts name="sql-scripts">
+						<location>${project.build.directory}/testdevopsliquibase-${db.version}.zip</location>
+						<scanPlaceholders>false</scanPlaceholders>
+						<encoding>UTF-8</encoding>
+						<createOrder>50</createOrder>
+                		<destroyOrder>50</destroyOrder>
+					</sql.Scripts>
+				</deployables>
+			</configuration>
 		</plugin>
 
     </plugins>
