@@ -1,2 +1,5 @@
 target/
 databasechangelog.csv
+.classpath
+.project
+.settings/**
