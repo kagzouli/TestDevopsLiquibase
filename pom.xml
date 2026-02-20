@@ -4,7 +4,7 @@
 <artifactId>testdevopsliquibase</artifactId>
 <version>0.0.1-SNAPSHOT</version>
 <properties>
-	<db.version>v1.1.0</db.version>
+	<db.version>v1.0.0</db.version>
 	<mariadb.client.version>3.5.7</mariadb.client.version>
 	<liquibase.version>4.33.0</liquibase.version>
 	<springboot.version>4.0.2</springboot.version>
@@ -119,24 +119,8 @@
 				</execution>
 
 
-				<!-- ┌──────────────────────────────────────────────── -->
-				<!-- │  EXÉCUTION 2 — Note tous avant version avant tagge  │ -->
-				<!-- └──────────────────────────────────────────────── -->
-				<execution>
-					<id>sync-before-tag</id>
-					<phase>prepare-package</phase>
-					<goals>
-						<goal>changelogSyncToTagSQL</goal>
-					</goals>
-					<configuration>
-						<toTag>${db.version}</toTag>
-						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
-					</configuration>
-				</execution>			
-                 
-
 				<!-- ┌──────────────────────────────────────────┐ -->
-				<!-- │  EXÉCUTION 3 — Génération du updateSQL   │ -->
+				<!-- │  EXÉCUTION 2 — Génération du updateSQL   │ -->
 				<!-- └──────────────────────────────────────────┘ -->
 				<execution>
 					<id>generate-update-sql</id>
@@ -147,12 +131,12 @@
 					<configuration>
 						
 						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
-						<migrationSqlOutputFile>${project.build.directory}/liquibase/001-scriptsql-${db.version}.sql</migrationSqlOutputFile>
+						<migrationSqlOutputFile>${project.build.directory}/liquibase/scriptsql-liquibasechange.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
 
 				<!-- ┌──────────────────────────────────────────────┐ -->
-				<!-- │  EXÉCUTION 4 — Génération du rollbackSQL     │ -->
+				<!-- │  EXÉCUTION 3 — Génération du rollbackSQL     │ -->
 				<!-- └──────────────────────────────────────────────┘ -->
 				<execution>
 					<id>generate-rollback-sql</id>
@@ -169,30 +153,35 @@
 			</executions> 
      	</plugin>
 
-		<!-- Zip of SQL content --> 
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-antrun-plugin</artifactId>
-			<version>3.1.0</version>
-			<executions>
-				<execution>
-					<id>create-zip</id>
-					<phase>package</phase>
-					<goals>
-						<goal>run</goal>
-					</goals>
-					<configuration>
-						<target>
-							<zip destfile="${project.build.directory}/testdevopsliquibase-${db.version}.zip">
-								<fileset file="${project.build.directory}/liquibase/001-scriptsql-${db.version}.sql"/>
-								<fileset file="${project.build.directory}/liquibase/001-scriptsql-${db.version}-rollback.sql"/>
-							</zip>
-						</target>
-					</configuration>
-				</execution>
-			</executions>
-		</plugin>
-
+		<!-- Generation des scripts SQL d'update  pour XLD liquibase -->
+		 <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.2.0</version>
+            <executions>
+                <execution>
+                    <id>parse-liquibase-sql</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <configuration>
+						<executable>cmd</executable>
+						<arguments>
+							<argument>/C</argument>
+							<argument>"C:\Outils\Git\bin\bash.exe" --login</argument>
+							<!-- Le script -->
+							<argument>${project.basedir}/scripts/generate_update.sh</argument>
+							<!-- Fichier SQL en entrée -->
+							<argument>${project.build.directory}/liquibase/scriptsql-liquibasechange.sql</argument>
+							<!-- Dossier de sortie -->
+							<argument>${project.build.directory}/generatedsql</argument>
+						</arguments>
+                	</configuration>
+                </execution>
+            </executions>
+        </plugin> 
+		
 
 		<!-- Create of the DAR -->
 		<plugin>
@@ -215,7 +204,7 @@
 				<packageVersion>${db.version}</packageVersion>
 				<deployables>
 					<sql.SqlScripts name="sql-scripts">
-						<location>${project.build.directory}/testdevopsliquibase-${db.version}.zip</location>
+						<location>${project.build.directory}/generatedsql</location>
 						<scanPlaceholders>false</scanPlaceholders>
 						<encoding>UTF-8</encoding>
 						<executeOrder>50</executeOrder>
