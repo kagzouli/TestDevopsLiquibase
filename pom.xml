@@ -107,7 +107,17 @@
 			</configuration>
 			<executions>
 
-
+				<!-- EXÉCUTION 1 — clearCheckSums -->
+				<execution>
+					<id>clear-checksums</id>
+					<phase>generate-ressources</phase>
+					<goals>
+						<goal>clearCheckSums</goal>
+					</goals>
+					<configuration>
+						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
+					</configuration>
+				</execution>
 
 				<!-- EXÉCUTION 2 — Génération du updateSQL -->
 				<execution>
@@ -117,7 +127,7 @@
 						<goal>updateSQL</goal>
 					</goals>
 					<configuration>
-						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=all&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
+						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
 						<migrationSqlOutputFile>${project.build.directory}/liquibase/scriptsql-liquibasechange.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
