@@ -228,6 +228,7 @@
 					<sql.SqlScripts name="sql-scripts">
 						<location>${project.build.directory}/generatedsql</location>
 						<scanPlaceholders>false</scanPlaceholders>
+						<defaultCopyStrategy>COPY_MODIFIED</defaultCopyStrategy>
 						<encoding>UTF-8</encoding>
 						<executeOrder>50</executeOrder>
 						<defaultCopyStrategy>COPY_MODIFIED</defaultCopyStrategy>
