@@ -232,8 +232,8 @@
 						<executeOrder>50</executeOrder>
 						<defaultCopyStrategy>COPY_MODIFIED</defaultCopyStrategy>
 						<executeOnUpgrade>true</executeOnUpgrade>
-    					<executeOnRollback>true</executeOnRollback>
-    					<runOnlyOnFirstDeployment>false</runOnlyOnFirstDeployment>
+						<executeOnRollback>false</executeOnRollback>
+						<runOnlyOnFirstDeployment>false</runOnlyOnFirstDeployment>
 					</sql.SqlScripts>
 				</deployables>
 			</configuration>
