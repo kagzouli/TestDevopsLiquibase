@@ -1,15 +1,15 @@
 #!/bin/bash
 # =============================================================================
-# generate_update.sh
+# generate-update.sh
 # Parse un fichier SQL généré par Liquibase et crée un fichier .sql numéroté
 # par changeset : 00001-sql-{changeset_id}.sql, 00002-sql-{changeset_id}.sql, ...
 # Les changesets sans SQL (ex: start-tag) sont automatiquement ignorés.
 #
 # Usage:
-#   ./generate_update.sh <input_file> [output_dir]
+#   ./generate-update.sh <input_file> [output_dir]
 #
 # Exemple:
-#   ./generate_update.sh update.sql ./output
+#   ./generate-update.sh update.sql ./output
 # =============================================================================
 
 set -euo pipefail

@@ -37,7 +37,6 @@
     	<artifactId>spring-boot-liquibase</artifactId>
 		<version>${springboot.version}</version>
 	</dependency>
-
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-test</artifactId>
@@ -62,6 +61,10 @@
 
 <build>
 	<plugins>
+
+		<!-- ┌──────────────────────────────────────────┐ -->
+		<!-- │  Compilation Java 17                     │ -->
+		<!-- └──────────────────────────────────────────┘ -->
 		<plugin>
 			<artifactId>maven-compiler-plugin</artifactId>
     		<version>3.5.1</version>
@@ -71,7 +74,9 @@
     		</configuration>
 		</plugin>
 
-		<!-- Plugin for Spring Boot plugin-->
+		<!-- ┌──────────────────────────────────────────┐ -->
+		<!-- │  Spring Boot                             │ -->
+		<!-- └──────────────────────────────────────────┘ -->
 		<plugin>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-maven-plugin</artifactId>
@@ -88,25 +93,21 @@
             </configuration>
 		</plugin>
 
+		<!-- ┌──────────────────────────────────────────────┐ -->
+		<!-- │  Liquibase : clearCheckSums + updateSQL       │ -->
+		<!-- │            + rollbackSQL                      │ -->
+		<!-- └──────────────────────────────────────────────┘ -->
 		<plugin>
     		<groupId>org.liquibase</groupId>
     		<artifactId>liquibase-maven-plugin</artifactId>
     		<version>${liquibase.version}</version>
-
-			<!-- ┌─────────────────────────────────────────────┐ -->
-			<!-- │  Configuration commune aux deux exécutions  │ -->
-			<!-- └─────────────────────────────────────────────┘ -->
 			<configuration>
 				<propertyFile>src/main/resources/liquibase.properties</propertyFile>
 				<outputFileEncoding>UTF-8</outputFileEncoding>
 			</configuration>
-
 			<executions>
 
-
-				<!-- ┌──────────────────────────────────────────┐ -->
-				<!-- │  EXÉCUTION 1 — Execution du clearCheckSum│ -->
-				<!-- └──────────────────────────────────────────┘ -->
+				<!-- EXÉCUTION 1 — clearCheckSums -->
 				<execution>
 					<id>clear-checksums</id>
 					<phase>prepare-package</phase>
@@ -118,10 +119,7 @@
 					</configuration>
 				</execution>
 
-
-				<!-- ┌──────────────────────────────────────────┐ -->
-				<!-- │  EXÉCUTION 2 — Génération du updateSQL   │ -->
-				<!-- └──────────────────────────────────────────┘ -->
+				<!-- EXÉCUTION 2 — Génération du updateSQL -->
 				<execution>
 					<id>generate-update-sql</id>
 					<phase>prepare-package</phase>
@@ -129,15 +127,12 @@
 						<goal>updateSQL</goal>
 					</goals>
 					<configuration>
-						
 						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
 						<migrationSqlOutputFile>${project.build.directory}/liquibase/scriptsql-liquibasechange.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
 
-				<!-- ┌──────────────────────────────────────────────┐ -->
-				<!-- │  EXÉCUTION 3 — Génération du rollbackSQL     │ -->
-				<!-- └──────────────────────────────────────────────┘ -->
+				<!-- EXÉCUTION 3 — Génération du rollbackSQL -->
 				<execution>
 					<id>generate-rollback-sql</id>
 					<phase>prepare-package</phase>
@@ -147,43 +142,70 @@
 					<configuration>
 						<rollbackTag>${db.version}</rollbackTag>
 						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
-						<migrationSqlOutputFile>${project.build.directory}/liquibase/001-scriptsql-${db.version}-rollback.sql</migrationSqlOutputFile>
+						<migrationSqlOutputFile>${project.build.directory}/liquibase/scriptsql-liquibasechange-rollback.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
+
 			</executions> 
      	</plugin>
 
-		<!-- Generation des scripts SQL d'update  pour XLD liquibase -->
-		 <plugin>
+		<!-- ┌──────────────────────────────────────────────────────────┐ -->
+		<!-- │  Génération des scripts SQL update + rollback pour XLD   │ -->
+		<!-- │  Appel via cmd /C + Git Bash                             │ -->
+		<!-- │  Phase : prepare-package (après les exécutions Liquibase)│ -->
+		<!-- └──────────────────────────────────────────────────────────┘ -->
+		<plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <version>3.2.0</version>
             <executions>
+
+                <!-- EXÉCUTION 1 — Découpage du SQL update -->
                 <execution>
-                    <id>parse-liquibase-sql</id>
+                    <id>parse-liquibase-update-sql</id>
                     <phase>prepare-package</phase>
                     <goals>
                         <goal>exec</goal>
                     </goals>
                     <configuration>
-						<executable>cmd</executable>
-						<arguments>
-							<argument>/C</argument>
-							<argument>"C:\Outils\Git\bin\bash.exe" --login</argument>
-							<!-- Le script -->
-							<argument>${project.basedir}/scripts/generate_update.sh</argument>
-							<!-- Fichier SQL en entrée -->
-							<argument>${project.build.directory}/liquibase/scriptsql-liquibasechange.sql</argument>
-							<!-- Dossier de sortie -->
-							<argument>${project.build.directory}/generatedsql</argument>
-						</arguments>
-                	</configuration>
+                        <executable>cmd</executable>
+                        <arguments>
+                            <argument>/C</argument>
+                            <argument>C:\Outils\Git\bin\bash.exe</argument>
+                            <argument>--login</argument>
+                            <argument>${project.basedir}/scripts/generate-update.sh</argument>
+                            <argument>${project.build.directory}/liquibase/scriptsql-liquibasechange.sql</argument>
+                            <argument>${project.build.directory}/generatedsql</argument>
+                        </arguments>
+                    </configuration>
                 </execution>
-            </executions>
-        </plugin> 
-		
 
-		<!-- Create of the DAR -->
+                <!-- EXÉCUTION 2 — Découpage du SQL rollback -->
+                <execution>
+                    <id>parse-liquibase-rollback-sql</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <configuration>
+                        <executable>cmd</executable>
+                        <arguments>
+                            <argument>/C</argument>
+                            <argument>C:\Outils\Git\bin\bash.exe</argument>
+                            <argument>--login</argument>
+                            <argument>${project.basedir}/scripts/generate-rollback.sh</argument>
+                            <argument>${project.build.directory}/liquibase/scriptsql-liquibasechange-rollback.sql</argument>
+                            <argument>${project.build.directory}/generatedsql</argument>
+                        </arguments>
+                    </configuration>
+                </execution>
+
+            </executions>
+        </plugin>
+
+		<!-- ┌──────────────────────────────────────────┐ -->
+		<!-- │  Création du DAR pour XL Deploy          │ -->
+		<!-- └──────────────────────────────────────────┘ -->
 		<plugin>
 			<groupId>com.xebialabs.xldeploy</groupId>
 			<artifactId>xldeploy-maven-plugin</artifactId>
