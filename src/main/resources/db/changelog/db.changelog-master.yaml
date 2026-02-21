@@ -3,8 +3,3 @@ databaseChangeLog:
   - include:
       file: db.changelog-1.0.0.yaml
       relativeToChangelogFile: true
-
-  # Include version 1.1.0
-  - include:
-      file: db.changelog-1.1.0.yaml
-      relativeToChangelogFile: true
