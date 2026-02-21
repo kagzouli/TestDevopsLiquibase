@@ -233,7 +233,7 @@
 						<executeOrder>50</executeOrder>
 						<defaultCopyStrategy>COPY_MODIFIED</defaultCopyStrategy>
 						<executeOnUpgrade>true</executeOnUpgrade>
-						<executeOnRollback>false</executeOnRollback>
+						<executeRollbackForModifiedScripts>false</executeRollbackForModifiedScripts>
 						<runOnlyOnFirstDeployment>false</runOnlyOnFirstDeployment>
 					</sql.SqlScripts>
 				</deployables>
