@@ -140,7 +140,7 @@
 						<goal>rollbackSQL</goal>
 					</goals>
 					<configuration>
-						<rollbackTag>${db.version}</rollbackTag>
+						<rollbackTag>v1.0.0</rollbackTag>
 						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
 						<migrationSqlOutputFile>${project.build.directory}/liquibase/scriptsql-liquibasechange-rollback.sql</migrationSqlOutputFile>
 					</configuration>
