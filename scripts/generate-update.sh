@@ -37,12 +37,8 @@ in_changeset=0     # sommes-nous dans un bloc changeset ?
 
 flush_if_empty() {
     # Supprime le fichier courant s'il ne contient que des commentaires / lignes vides
-    if [[ -n "$current_file" && -f "$current_file" ]]; then
-        sql_lines=$(grep -cvE '^\s*(--|$)' "$current_file" || true)
-        if [[ "$sql_lines" -eq 0 ]]; then
-            rm -f "$current_file"
+    if [[ -n "$current_file" && ! -f "$current_file" ]]; then
             (( counter-- )) || true
-        fi
     fi
 }
 
@@ -67,13 +63,6 @@ while IFS= read -r line || [[ -n "$line" ]]; do
         # Construit le nom de fichier : 00001-sql-{changeset_id}.sql
         filename="$(printf '%05d' "$counter")-sql-${changeset_id}.sql"
         current_file="$OUTPUT_DIR/$filename"
-
-        {
-            echo "-- ============================================================"
-            echo "-- Changeset #$(printf '%05d' "$counter")"
-            echo "-- $changeset_full"
-            echo "-- ============================================================"
-        } > "$current_file"
 
         in_changeset=1
         continue

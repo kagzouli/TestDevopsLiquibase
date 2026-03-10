@@ -110,7 +110,7 @@
 				<!-- EXÉCUTION 1 — clearCheckSums -->
 				<execution>
 					<id>clear-checksums</id>
-					<phase>generate-ressources</phase>
+					<phase>prepare-package</phase>
 					<goals>
 						<goal>clearCheckSums</goal>
 					</goals>
@@ -127,7 +127,7 @@
 						<goal>updateSQL</goal>
 					</goals>
 					<configuration>
-						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
+						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
 						<migrationSqlOutputFile>${project.build.directory}/liquibase/scriptsql-liquibasechange.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
@@ -141,7 +141,7 @@
 					</goals>
 					<configuration>
 						<rollbackTag>v1.0.0</rollbackTag>
-						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=true&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
+						<url>offline:mariadb?version=10.6&amp;outputLiquibaseSql=none&amp;changeLogFile=${project.build.directory}/liquibase/databasechangelog.csv</url>
 						<migrationSqlOutputFile>${project.build.directory}/liquibase/scriptsql-liquibasechange-rollback.sql</migrationSqlOutputFile>
 					</configuration>
 				</execution>
@@ -175,7 +175,7 @@
                             <argument>--login</argument>
                             <argument>${project.basedir}/scripts/generate-update.sh</argument>
                             <argument>${project.build.directory}/liquibase/scriptsql-liquibasechange.sql</argument>
-                            <argument>${project.build.directory}/generatedsql</argument>
+                            <argument>${project.build.directory}/dar/generatedsql</argument>
                         </arguments>
                     </configuration>
                 </execution>
@@ -195,7 +195,7 @@
                             <argument>--login</argument>
                             <argument>${project.basedir}/scripts/generate-rollback.sh</argument>
                             <argument>${project.build.directory}/liquibase/scriptsql-liquibasechange-rollback.sql</argument>
-                            <argument>${project.build.directory}/generatedsql</argument>
+                            <argument>${project.build.directory}/dar/generatedsql</argument>
                         </arguments>
                     </configuration>
                 </execution>
@@ -226,15 +226,12 @@
 				<packageVersion>${db.version}</packageVersion>
 				<deployables>
 					<sql.SqlScripts name="sql-scripts">
-						<location>${project.build.directory}/generatedsql</location>
-						<scanPlaceholders>false</scanPlaceholders>
-						<defaultCopyStrategy>COPY_MODIFIED</defaultCopyStrategy>
+						<location>${project.build.directory}/dar/generatedsql</location>
+						<scanPlaceholders>true</scanPlaceholders>
 						<encoding>UTF-8</encoding>
 						<executeOrder>50</executeOrder>
-						<defaultCopyStrategy>COPY_MODIFIED</defaultCopyStrategy>
 						<executeModifiedScripts>false</executeModifiedScripts>
 						<executeRollbackForModifiedScripts>false</executeRollbackForModifiedScripts>
-						<runOnlyOnFirstDeployment>false</runOnlyOnFirstDeployment>
 					</sql.SqlScripts>
 				</deployables>
 			</configuration>

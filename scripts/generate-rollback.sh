@@ -88,13 +88,6 @@ while IFS= read -r line || [[ -n "$line" ]]; do
         current_id="$changeset_id"
         current_file="$GENERATED_DIR/${prefix}-sql-${changeset_id}-rollback.sql"
 
-        # Entête du fichier rollback
-        {
-            echo "-- ============================================================"
-            echo "-- Rollback Changeset : $changeset_id"
-            echo "-- ============================================================"
-        } > "$current_file"
-
         continue
     fi
 
